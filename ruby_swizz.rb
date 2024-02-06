@@ -2,8 +2,8 @@ require 'date'
 
 class RubySwizz
   class << self
-    def beats_time(time_input = DateTime.now)
-      @time = time_input
+    def beats_time(time_input = nil)
+      @time = time_check(time_input)
       @swatch_beats = convert_to_beats
     end
 
@@ -18,6 +18,17 @@ class RubySwizz
 
       # Return the Swatch Beats
       beetz
+    end
+
+    def time_check(inpt)
+      return DateTime.now if inpt.nil?
+      if inpt.is_a? String
+        begin
+          DateTime.parse(inpt)
+        rescue
+          DateTime.now
+        end
+      end
     end
   end
 end
